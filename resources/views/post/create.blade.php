@@ -32,10 +32,13 @@
                                 <small class="text-danger fw-bolder">{{ $message }}</small>
                                 @enderror
                             </div>
-{{--                            <div class="mb-3">--}}
-{{--                                <label for="photo" class="form-label">Upload Photo</label>--}}
-{{--                                <input type="file" name="photo" id="photo" class="form-control">--}}
-{{--                            </div>--}}
+                            <div class="mb-3">
+                                <label for="photo" class="form-label">Upload Photo</label>
+                                <input type="file" name="photo[]" id="photo" class="form-control" multiple>
+                                @error('photo.*')
+                                <small class="text-danger fw-bolder">{{ $message }}</small>
+                                @enderror
+                            </div>
                             <div class="mb-3">
                                 <label for="description" class="form-label">Description</label>
                                 <textarea name="description" id="description" rows="4" class="form-control">{{ old('description') }}</textarea>

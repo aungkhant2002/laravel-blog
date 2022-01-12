@@ -16,6 +16,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Title</th>
+                                <th>Photo</th>
                                 <th>Description</th>
                                 <th>Category</th>
                                 <th>Owner</th>
@@ -28,6 +29,15 @@
                                 <tr>
                                     <td>{{ $post->id }}</td>
                                     <td>{{ $post->title }}</td>
+                                    <td>
+                                        @forelse($post->photos as $photo)
+                                            <a class="venobox" data-gall="img{{ $post->id }}" href="{{ asset('storage/photo/'.$photo->name) }}">
+                                                <img src="{{ asset('storage/thumbnail/'.$photo->name) }}" height="30" alt="image alt"/>
+                                            </a>
+                                        @empty
+                                            <p class="text-muted">No Photo</p>
+                                        @endforelse
+                                    </td>
                                     <td>{{ \Illuminate\Support\Str::words($post->description, 20) }}</td>
                                     <td>{{ $post->category->title }}</td>
                                     <td>{{ $post->user->name }}</td>
