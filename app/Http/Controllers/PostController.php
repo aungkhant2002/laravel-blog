@@ -46,7 +46,7 @@ class PostController extends Controller
             "title" => "required|min:3|unique:posts,title",
             "category" => "required|integer|exists:categories,id",
             "description" => "required|min:5",
-            "photo" => "required",
+            "photo" => "nullable",
             "photo.*" => "file|mimetypes:image/jpeg,image/png"
         ]);
 
@@ -68,16 +68,16 @@ class PostController extends Controller
         if ($request->hasFile('photo')) {
             foreach ($request->file('photo') as $photo) {
 
-//                store file
+                // store file
                 $newName = uniqid()."_photo.".$photo->extension();
                 $photo->storeAs("public/photo/", $newName);
 
-//                making thumbnail
+                // making thumbnail
                 $img = Image::make($photo);
                 $img->fit(200, 200);
                 $img->save("storage/thumbnail/".$newName);
 
-//                save in db
+                // save in db
                 $photo = new Photo();
                 $photo->name = $newName;
                 $photo->post_id = $post->id;
@@ -127,6 +127,8 @@ class PostController extends Controller
             "description" => "required|min:5",
 //            "photo" => "required",
         ]);
+
+//        return $request;
 
         $post->title = $request->title;
         $post->slug = Str::slug($request->title);

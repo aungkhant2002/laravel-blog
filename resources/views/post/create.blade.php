@@ -15,17 +15,21 @@
                             @csrf
                             <div class="mb-3">
                                 <label for="title" class="form-label">Post Title</label>
-                                <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}">
+                                <input type="text" name="title" id="title"
+                                       class="form-control @error('title') is-invalid @enderror"
+                                       value="{{ old('title') }}">
                                 @error('title')
-                                    <small class="text-danger fw-bolder">{{ $message }}</small>
+                                <small class="text-danger fw-bolder">{{ $message }}</small>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="category" class="form-label">Select Category</label>
-                                <select name="category" id="category" class="form-select @error('category') is-invalid @enderror">
+                                <select name="category" id="category"
+                                        class="form-select @error('category') is-invalid @enderror">
                                     <option value="" selected disabled>Select Category</option>
                                     @foreach(\App\Models\Category::all() as $category)
-                                        <option value="{{ $category->id }}" {{ $category->id == old('category') ? 'selected' : '' }}>{{ $category->title }}</option>
+                                        <option
+                                            value="{{ $category->id }}" {{ $category->id == old('category') ? 'selected' : '' }}>{{ $category->title }}</option>
                                     @endforeach
                                 </select>
                                 @error('category')
@@ -34,20 +38,40 @@
                             </div>
                             <div class="mb-3">
                                 <label for="photo" class="form-label">Upload Photo</label>
-                                <input type="file" name="photo[]" id="photo" class="form-control" multiple>
-                                @error('photo.*')
+                                <input type="file" name="photo[]" id="photo"
+                                       class="form-control @error('photo') is-invalid @enderror" multiple>
+                                @error('photo')
                                 <small class="text-danger fw-bolder">{{ $message }}</small>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="description" class="form-label">Description</label>
-                                <textarea name="description" id="description" rows="4" class="form-control">{{ old('description') }}</textarea>
+                                <textarea name="description" id="description" rows="4"
+                                          class="form-control">{{ old('description') }}</textarea>
                                 @error('description')
                                 <small class="text-danger fw-bolder">{{ $message }}</small>
                                 @enderror
                             </div>
-                            <button class="btn btn-primary">Add Post</button>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                           required>
+                                    <label class="form-check-label" for="flexSwitchCheckDefault">Confirm</label>
+                                </div>
+                                <button class="btn btn-primary">Create Post</button>
+                            </div>
                         </form>
+
+                        {{-- displaying validation errors --}}
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

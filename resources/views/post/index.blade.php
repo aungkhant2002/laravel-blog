@@ -71,7 +71,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td class="text-center" colspan="7">There is no post 😥</td>
+                                    <td class="text-center" colspan="8">There is no post 😥</td>
                                 </tr>
                             @endforelse
                             </tbody>
