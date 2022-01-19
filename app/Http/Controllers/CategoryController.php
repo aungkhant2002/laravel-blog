@@ -27,7 +27,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('category.create');
+        $categories = Category::latest("id")->limit(3)->get();
+        return view('category.create', compact('categories'));
     }
 
     /**
@@ -46,7 +47,7 @@ class CategoryController extends Controller
         $category->title = $request->title;
         $category->user_id = Auth::id();
         $category->save();
-        return redirect()->route('category.index');
+        return redirect()->back()->with('status', 'Category Created');
 
     }
 
@@ -99,6 +100,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->back();
+        return redirect()->back()->with('status', 'Category Deleted');
     }
 }

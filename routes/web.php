@@ -24,6 +24,10 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('/category', CategoryController::class);
-Route::resource('/post', PostController::class);
-Route::resource('/photo', PhotoController::class);
+Route::middleware('auth')->group(function () {
+
+    Route::resource('/category', CategoryController::class);
+    Route::resource('/post', PostController::class);
+    Route::resource('/photo', PhotoController::class);
+
+});

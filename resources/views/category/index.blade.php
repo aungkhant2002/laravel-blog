@@ -11,6 +11,9 @@
                         Category List
                     </div>
                     <div class="card-body">
+                        @if(session('status'))
+                            <p class="alert alert-success mb-0">{{ session('status') }}</p>
+                        @endif
                         <table class="table align-middle">
                             <thead>
                             <tr>
@@ -29,13 +32,17 @@
                                     <td>{{ $category->user->name ?? "unknown" }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{ route('category.edit', $category->id) }}" class="btn btn-outline-primary btn-sm">
+                                            <a href="{{ route('category.edit', $category->id) }}"
+                                               class="btn btn-outline-primary btn-sm" title="edit">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
-                                            <button form="categoryDeleteForm{{ $category->id }}" class="btn btn-outline-primary btn-sm">
+                                            <button form="categoryDeleteForm{{ $category->id }}"
+                                                    class="btn btn-outline-primary btn-sm" title="delete">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
-                                            <form action="{{ route('category.destroy', $category->id) }}" id="categoryDeleteForm{{ $category->id }}" class="d-inline-block" method="post">
+                                            <form action="{{ route('category.destroy', $category->id) }}"
+                                                  id="categoryDeleteForm{{ $category->id }}" class="d-inline-block"
+                                                  method="post">
                                                 @csrf
                                                 @method('delete')
                                             </form>
