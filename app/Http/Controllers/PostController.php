@@ -14,13 +14,16 @@ use Intervention\Image\Facades\Image;
 class PostController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource.x
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::when(isset(request()->search), function ($query) {
+            $search = request()->search;
+            $query->where("title", "LIKE", "%$search%")->orWhere("description", "LIKE", "%$search%");
+        })->latest("id")->paginate(5);
         return view('post.index', compact('posts'));
     }
 
@@ -87,7 +90,7 @@ class PostController extends Controller
         }
 
 
-        return redirect()->route('post.index');
+        return redirect()->back()->with('status', 'Post Created');
     }
 
     /**
@@ -136,7 +139,7 @@ class PostController extends Controller
         $post->excerpt = Str::words($request->description,20);
         $post->category_id = $request->category;
         $post->update();
-        return redirect()->route('post.index');
+        return redirect()->route('post.index')->with('status', 'Post Updated');
     }
 
     /**

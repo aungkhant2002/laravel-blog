@@ -11,7 +11,11 @@
                         Create Post
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('post.store') }}" method="post" enctype="multipart/form-data">
+                        @if(session('status'))
+                            <p class="alert alert-success">{{ session('status') }}</p>
+                        @endif
+                        <form action="{{ route('post.store') }}" method="post" class="mb-3"
+                              enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label for="title" class="form-label">Post Title</label>
