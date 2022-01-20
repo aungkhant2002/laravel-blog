@@ -30,6 +30,12 @@
                             </span>
                         </div>
                         <p class="text-black-50">{{ $post->description }}</p>
+
+                        <div class="">
+                            @foreach($post->photos as $photo)
+                                <img src="{{ asset('storage/photo/'.$photo->name) }}" class="me-1" width="100" height="100" alt="">
+                            @endforeach
+                        </div>
                     </div>
                     <div class="card-footer">
                         <div class="d-flex justify-content-between align-items-center">

@@ -60,8 +60,8 @@
                                     <button class="btn btn-primary">Upload</button>
                                 </form>
                                 <div
-                                    class="border rounded border-2 uploader-ui px-3 border-dark d-flex justify-content-center align-items-center"
-                                    id="uploaderUi">
+                                    class="border rounded border-2 uploader-ui px-3 border-dark d-flex justify-content-center align-items-center me-2"
+                                    id="uploaderUi" title="add photo">
                                     <i class="fas fa-plus fa-2x"></i>
                                 </div>
                                 @forelse($post->photos as $photo)
@@ -70,12 +70,13 @@
                                               class="position-absolute bottom-0 start-0" method="post">
                                             @csrf
                                             @method('delete')
-                                            <button class="btn btn-danger btn-sm">
+                                            <button class="btn btn-danger btn-sm" title="delete">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </form>
-                                        <img src="{{ asset('storage/thumbnail/'.$photo->name) }}" class="mx-1 rounded"
-                                             height="100" alt="">
+                                        <a class="venobox" data-gall="img{{ $post->id }}" href="{{ asset('storage/photo/'.$photo->name) }}">
+                                            <img src="{{ asset('storage/thumbnail/'.$photo->name) }}" class="me-2" height="100" width="100" alt="image alt"/>
+                                        </a>
                                     </div>
                                 @empty
                                 @endforelse

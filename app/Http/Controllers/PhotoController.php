@@ -43,7 +43,7 @@ class PhotoController extends Controller
         $request->validate([
             "post_id" => "required",
             "photo" => "nullable",
-            "photo.*" => "file|mimetypes:image/jpeg,image/png"
+            "photo.*" => "file|mimetypes:image/jpeg,image/png|max:3000"
         ]);
 
         if ($request->hasFile('photo')) {

@@ -43,7 +43,7 @@
                                     <td>
                                         @forelse($post->photos as $photo)
                                             <a class="venobox" data-gall="img{{ $post->id }}" href="{{ asset('storage/photo/'.$photo->name) }}">
-                                                <img src="{{ asset('storage/thumbnail/'.$photo->name) }}" height="30" alt="image alt"/>
+                                                <img src="{{ asset('storage/thumbnail/'.$photo->name) }}" class="rounded-circle border border-2 border-primary" style="margin-left: -20px" height="40" width="40" alt="image alt"/>
                                             </a>
                                         @empty
                                             <p class="text-muted">No Photo</p>
