@@ -50,7 +50,9 @@ class PostController extends Controller
             "category" => "required|integer|exists:categories,id",
             "description" => "required|min:5",
             "photo" => "nullable",
-            "photo.*" => "file|mimetypes:image/jpeg,image/png"
+            "photo.*" => "file|mimetypes:image/jpeg,image/png",
+            "tags" => "required",
+            "tags.*" => "integer|exists:tags,id",
         ]);
 
         $post = new Post();
@@ -62,6 +64,9 @@ class PostController extends Controller
         $post->user_id = Auth::id();
         $post->is_publish = true;
         $post->save();
+
+        // save tags in pivot table
+        $post->tags()->attach($request->tags);
 
         // auto create folder
         if(!Storage::exists("public/thumbnail")){
@@ -139,7 +144,15 @@ class PostController extends Controller
         $post->excerpt = Str::words($request->description,20);
         $post->category_id = $request->category;
         $post->update();
+
+        // delete all record from pivot table
+        $post->tags()->delete();
+
+        // save db record in pivot table
+        $post->tags()->attach($request->tags);
+
         return redirect()->route('post.index')->with('status', 'Post Updated');
+
     }
 
     /**
@@ -159,6 +172,9 @@ class PostController extends Controller
 
         // delete db record from hasMany in photo table
         $post->photos()->delete();
+
+        // delete db record from pivot table
+        $post->tags()->delete();
 
         // post delete
         $post->delete();

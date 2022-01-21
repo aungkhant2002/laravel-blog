@@ -11,12 +11,14 @@
                         Create Post
                     </div>
                     <div class="card-body">
+
                         @if(session('status'))
                             <p class="alert alert-success">{{ session('status') }}</p>
                         @endif
                         <form action="{{ route('post.store') }}" method="post" class="mb-3"
                               enctype="multipart/form-data">
                             @csrf
+
                             <div class="mb-3">
                                 <label for="title" class="form-label">Post Title</label>
                                 <input type="text" name="title" id="title"
@@ -26,6 +28,7 @@
                                 <small class="text-danger fw-bolder">{{ $message }}</small>
                                 @enderror
                             </div>
+
                             <div class="mb-3">
                                 <label for="category" class="form-label">Select Category</label>
                                 <select name="category" id="category"
@@ -40,6 +43,30 @@
                                 <small class="text-danger fw-bolder">{{ $message }}</small>
                                 @enderror
                             </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Select Tag</label>
+                                <br>
+                                <div class="">
+                                    @foreach(\App\Models\Tag::all() as $tag)
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" value="{{ $tag->id }}"
+                                                   name="tags[]"
+                                                   id="tag{{ $tag->id }}" multiple {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="tag{{ $tag->id }}">
+                                                {{ $tag->title }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @error('tags')
+                                <small class="text-danger fw-bolder">{{ $message }}</small>
+                                @enderror
+                                @error('tags.*')
+                                <small class="text-danger fw-bolder">{{ $message }}</small>
+                                @enderror
+                            </div>
+
                             <div class="mb-3">
                                 <label for="photo" class="form-label">Upload Photo</label>
                                 <input type="file" name="photo[]" id="photo"
@@ -47,7 +74,11 @@
                                 @error('photo')
                                 <small class="text-danger fw-bolder">{{ $message }}</small>
                                 @enderror
+                                @error('photo.*')
+                                <small class="text-danger fw-bolder">{{ $message }}</small>
+                                @enderror
                             </div>
+
                             <div class="mb-3">
                                 <label for="description" class="form-label">Description</label>
                                 <textarea name="description" id="description" rows="4"
@@ -56,6 +87,7 @@
                                 <small class="text-danger fw-bolder">{{ $message }}</small>
                                 @enderror
                             </div>
+
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
@@ -64,6 +96,7 @@
                                 </div>
                                 <button class="btn btn-primary">Create Post</button>
                             </div>
+
                         </form>
 
                         {{-- displaying validation errors --}}
@@ -76,6 +109,7 @@
                                 </ul>
                             </div>
                         @endif
+
                     </div>
                 </div>
             </div>

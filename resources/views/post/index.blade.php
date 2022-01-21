@@ -30,6 +30,7 @@
                                 <th>Photo</th>
                                 <th>Is_publish</th>
                                 <th>Category</th>
+                                <th>Tags</th>
                                 <th>Owner</th>
                                 <th>Controls</th>
                                 <th>Created_at</th>
@@ -56,6 +57,16 @@
                                         </div>
                                     </td>
                                     <td>{{ $post->category->title ?? "Unknown Category" }}</td>
+                                    <td>
+                                        @forelse($post->tags as $tag)
+                                            <p class="mb-0 badge rounded-pill bg-primary">
+                                                <i class="fas fa-hashtag"></i>
+                                                {{ $tag->title }}
+                                            </p>
+                                        @empty
+                                            <p class="text-muted mb-0">No Tag</p>
+                                        @endforelse
+                                    </td>
                                     <td>{{ $post->user->name ?? "Unknown User" }}</td>
                                     <td>
                                         <div class="btn-group">

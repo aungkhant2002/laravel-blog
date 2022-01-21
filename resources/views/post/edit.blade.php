@@ -41,6 +41,29 @@
                         </div>
 
                         <div class="mb-3">
+                            <label class="form-label">Select Tag</label>
+                            <br>
+                            <div class="">
+                                @foreach(\App\Models\Tag::all() as $tag)
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" value="{{ $tag->id }}"
+                                               name="tags[]"
+                                               id="tag{{ $tag->id }}" form="updateForm" multiple {{ in_array($tag->id ,old('tags', $post->tags->pluck("id")->toArray())) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="tag{{ $tag->id }}">
+                                            {{ $tag->title }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                            @error('tags')
+                            <small class="text-danger fw-bolder">{{ $message }}</small>
+                            @enderror
+                            @error('tags.*')
+                            <small class="text-danger fw-bolder">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
                             <label class="form-label">Photo</label>
                             <div class="border rounded p-3 d-flex overflow-scroll">
                                 <form action="{{ route('photo.store') }}" class="d-none" id="photoUploadForm"
