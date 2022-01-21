@@ -49,6 +49,10 @@
                             <a class="nav-link {{ request()->url() == route('post.index') ? 'active' : '' }}"
                                aria-current="page" href="{{ route('post.index') }}">Post List</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->url() == route('photo.index') ? 'active' : '' }}"
+                               aria-current="page" href="{{ route('photo.index') }}">My Photo</a>
+                        </li>
                     @endauth
                 </ul>
 

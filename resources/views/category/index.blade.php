@@ -20,6 +20,7 @@
                                 <th>#</th>
                                 <th>Title</th>
                                 <th>Owner</th>
+                                <th>Photo</th>
                                 <th>Controls</th>
                                 <th>Created_at</th>
                             </tr>
@@ -30,6 +31,13 @@
                                     <td>{{ $category->id }}</td>
                                     <td>{{ $category->title }}</td>
                                     <td>{{ $category->user->name ?? "unknown" }}</td>
+                                    <td>@forelse($category->photos as $photo)
+                                            <a class="venobox" data-gall="img{{ $category->id }}" href="{{ asset('storage/photo/'.$photo->name) }}">
+                                                <img src="{{ asset('storage/thumbnail/'.$photo->name) }}" class="rounded-circle border border-2 border-success" style="margin-left: -20px" height="40" width="40" alt="image alt"/>
+                                            </a>
+                                        @empty
+                                            <p class="text-muted">No Photo</p>
+                                        @endforelse</td>
                                     <td>
                                         <div class="btn-group">
                                             <a href="{{ route('category.edit', $category->id) }}"

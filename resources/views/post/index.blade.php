@@ -41,7 +41,7 @@
                                 <tr>
                                     <td>{{ $post->id }}</td>
                                     <td>{{ \Illuminate\Support\Str::words($post->title, 5) }}</td>
-                                    <td>
+                                    <td style="width: 150px;">
                                         @forelse($post->photos as $photo)
                                             <a class="venobox" data-gall="img{{ $post->id }}" href="{{ asset('storage/photo/'.$photo->name) }}">
                                                 <img src="{{ asset('storage/thumbnail/'.$photo->name) }}" class="rounded-circle border border-2 border-primary" style="margin-left: -20px" height="40" width="40" alt="image alt"/>

@@ -102,6 +102,7 @@
                                         </a>
                                     </div>
                                 @empty
+                                    <p class="text-muted">No Photo</p>
                                 @endforelse
                             </div>
 
