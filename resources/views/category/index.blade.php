@@ -57,14 +57,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <span class="small">
-                                            <i class="fas fa-calendar-alt"></i>
-                                            {{ $category->created_at->format('d M Y') }}
-                                        </span><br>
-                                        <span class="small">
-                                            <i class="fas fa-clock"></i>
-                                            {{ $category->created_at->format('H : i a') }}
-                                        </span>
+                                        {!! $category->show_time !!}
                                     </td>
                                 </tr>
                             @empty

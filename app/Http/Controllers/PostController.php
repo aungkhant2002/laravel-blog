@@ -20,10 +20,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::when(isset(request()->search), function ($query) {
-            $search = request()->search;
-            $query->where("title", "LIKE", "%$search%")->orWhere("description", "LIKE", "%$search%");
-        })->latest("id")->paginate(5);
+        $posts = Post::search()->with(['user', 'category', 'photos', 'tags'])->latest("id")->paginate(5); // search() is written by local query scope
         return view('post.index', compact('posts'));
     }
 
@@ -57,7 +54,7 @@ class PostController extends Controller
 
         $post = new Post();
         $post->title = $request->title;
-        $post->slug = Str::slug($request->title);
+        $post->slug = $request->title; // with mutator
         $post->description = $request->description;
         $post->excerpt = Str::words($request->description, 20);
         $post->category_id = $request->category;
@@ -178,6 +175,6 @@ class PostController extends Controller
 
         // post delete
         $post->delete();
-        return redirect()->back();
+        return redirect()->back()->with("status", "Post Deleted");
     }
 }

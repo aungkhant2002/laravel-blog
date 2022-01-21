@@ -40,7 +40,7 @@
                             @forelse($posts as $post)
                                 <tr>
                                     <td>{{ $post->id }}</td>
-                                    <td>{{ \Illuminate\Support\Str::words($post->title, 5) }}</td>
+                                    <td class="w-25">{{ $post->short_title }}</td>
                                     <td style="width: 150px;">
                                         @forelse($post->photos as $photo)
                                             <a class="venobox" data-gall="img{{ $post->id }}" href="{{ asset('storage/photo/'.$photo->name) }}">
@@ -90,14 +90,7 @@
                                         </form>
                                     </td>
                                     <td class="text-nowrap">
-                                        <span class="small">
-                                            <i class="fas fa-calendar-alt"></i>
-                                            {{ $post->created_at->format('d M Y') }}
-                                        </span><br>
-                                        <span class="small">
-                                            <i class="fas fa-clock"></i>
-                                            {{ $post->created_at->format('H : i a') }}
-                                        </span>
+                                        {!! $post->show_time !!}
                                     </td>
                                 </tr>
                             @empty

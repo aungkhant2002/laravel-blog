@@ -18,4 +18,16 @@ class Category extends Model
     {
         return $this->hasManyThrough(Photo::class, Post::class);
     }
+
+    public function getShowTimeAttribute()
+    {
+        return "<span class='small'>
+                    <i class='fas fa-calendar-alt'></i>
+                    ".$this->created_at->format('d M Y')."
+                </span><br>
+                <span class='small'>
+                    <i class='fas fa-clock'></i>
+                    ".$this->created_at->format('H : i a')."
+                </span>";
+    }
 }
