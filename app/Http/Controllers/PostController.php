@@ -6,7 +6,9 @@ use App\Models\Photo;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -52,45 +54,48 @@ class PostController extends Controller
             "tags.*" => "integer|exists:tags,id",
         ]);
 
-        $post = new Post();
-        $post->title = $request->title;
-        $post->slug = $request->title; // with mutator
-        $post->description = $request->description;
-        $post->excerpt = Str::words($request->description, 20);
-        $post->category_id = $request->category;
-        $post->user_id = Auth::id();
-        $post->is_publish = true;
-        $post->save();
+        DB::transaction(function () use ($request) {
 
-        // save tags in pivot table
-        $post->tags()->attach($request->tags);
+            $post = new Post();
+            $post->title = $request->title;
+            $post->slug = $request->title; // with mutator
+            $post->description = $request->description;
+            $post->excerpt = Str::words($request->description, 20);
+            $post->category_id = $request->category;
+            $post->user_id = Auth::id();
+            $post->is_publish = true;
+            $post->save();
 
-        // auto create folder
-        if(!Storage::exists("public/thumbnail")){
-            Storage::makeDirectory("public/thumbnail");
-        }
+            // save tags in pivot table
+            $post->tags()->attach($request->tags);
 
-        if ($request->hasFile('photo')) {
-            foreach ($request->file('photo') as $photo) {
-
-                // store file
-                $newName = uniqid()."_photo.".$photo->extension();
-                $photo->storeAs("public/photo/", $newName);
-
-                // making thumbnail
-                $img = Image::make($photo);
-                $img->fit(200, 200);
-                $img->save("storage/thumbnail/".$newName);
-
-                // save in db
-                $photo = new Photo();
-                $photo->name = $newName;
-                $photo->post_id = $post->id;
-                $photo->user_id = Auth::id();
-                $photo->save();
+            // auto create folder
+            if(!Storage::exists("public/thumbnail")){
+                Storage::makeDirectory("public/thumbnail");
             }
-        }
 
+            if ($request->hasFile('photo')) {
+                foreach ($request->file('photo') as $photo) {
+
+                    // store file
+                    $newName = uniqid()."_photo.".$photo->extension();
+                    $photo->storeAs("public/photo/", $newName);
+
+                    // making thumbnail
+                    $img = Image::make($photo);
+                    $img->fit(200, 200);
+                    $img->save("storage/thumbnail/".$newName);
+
+                    // save in db
+                    $photo = new Photo();
+                    $photo->name = $newName;
+                    $photo->post_id = $post->id;
+                    $photo->user_id = Auth::id();
+                    $photo->save();
+                }
+            }
+
+        });
 
         return redirect()->back()->with('status', 'Post Created');
     }
