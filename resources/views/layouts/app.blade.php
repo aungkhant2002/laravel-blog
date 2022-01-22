@@ -33,26 +33,14 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav me-auto">
                     @auth
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->url() == route('category.create') ? 'active' : '' }}"
-                               aria-current="page" href="{{ route('category.create') }}">Create Category</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->url() == route('category.index') ? 'active' : '' }}"
-                               aria-current="page" href="{{ route('category.index') }}">Category List</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->url() == route('post.create') ? 'active' : '' }}"
-                               aria-current="page" href="{{ route('post.create') }}">Create Post</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->url() == route('post.index') ? 'active' : '' }}"
-                               aria-current="page" href="{{ route('post.index') }}">Post List</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->url() == route('photo.index') ? 'active' : '' }}"
-                               aria-current="page" href="{{ route('photo.index') }}">My Photo</a>
-                        </li>
+
+                        <x-li route-name="home" title="Home" />
+                        <x-li route-name="category.create" title="Create Category" />
+                        <x-li route-name="category.index" title="Category List" />
+                        <x-li route-name="post.create" title="Create Post" />
+                        <x-li route-name="post.index" title="Post List" />
+                        <x-li route-name="photo.index" title="My Photo" />
+
                     @endauth
                 </ul>
 

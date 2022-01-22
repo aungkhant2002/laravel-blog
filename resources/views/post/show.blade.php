@@ -33,7 +33,7 @@
 
                         <div class="">
                             @foreach($post->photos as $photo)
-                                <img src="{{ asset('storage/photo/'.$photo->name) }}" class="me-1" width="100" height="100" alt="">
+                                <img src="{{ asset('storage/photo/'.$photo->name) }}" class="me-1 mb-2 border border-2 border-dark rounded" width="100" height="100" alt="">
                             @endforeach
                         </div>
                     </div>

@@ -11,7 +11,7 @@
                         My Photo
                     </div>
                     <div class="card-body">
-                        <div class="d-flex">
+                        <div class="d-flex overflow-scroll">
                             @forelse(auth()->user()->photos as $photo)
                                 <div class="position-relative">
                                     <form action="{{ route('photo.destroy', $photo->id) }}"
