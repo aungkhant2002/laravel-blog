@@ -19,15 +19,17 @@
                               enctype="multipart/form-data">
                             @csrf
 
-                            <div class="mb-3">
-                                <label for="title" class="form-label">Post Title</label>
-                                <input type="text" name="title" id="title"
-                                       class="form-control @error('title') is-invalid @enderror"
-                                       value="{{ old('title') }}">
-                                @error('title')
-                                <small class="text-danger fw-bolder">{{ $message }}</small>
-                                @enderror
-                            </div>
+                            <x-input-text name="title" title="Post Title" />
+
+{{--                            <div class="mb-3">--}}
+{{--                                <label for="title" class="form-label">Post Title</label>--}}
+{{--                                <input type="text" name="title" id="title"--}}
+{{--                                       class="form-control @error('title') is-invalid @enderror"--}}
+{{--                                       value="{{ old('title') }}">--}}
+{{--                                @error('title')--}}
+{{--                                <small class="text-danger fw-bolder">{{ $message }}</small>--}}
+{{--                                @enderror--}}
+{{--                            </div>--}}
 
                             <div class="mb-3">
                                 <label for="category" class="form-label">Select Category</label>

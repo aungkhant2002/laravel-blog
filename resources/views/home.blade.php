@@ -15,6 +15,9 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+
+{{--                     blade directive from appServiceProvide File--}}
+                    @ak
                 </div>
             </div>
         </div>

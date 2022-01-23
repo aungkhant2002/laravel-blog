@@ -9,6 +9,7 @@ use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -119,6 +120,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        Gate::authorize("update-post", $post);
         return view('post.edit', compact('post'));
     }
 
