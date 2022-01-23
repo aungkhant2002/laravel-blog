@@ -120,7 +120,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        Gate::authorize("update-post", $post);
+        Gate::authorize("update", $post);
         return view('post.edit', compact('post'));
     }
 
@@ -133,6 +133,8 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
+        Gate::authorize("update", $post);
+
         $request->validate([
             "title" => "required|min:3|unique:posts,title,$post->id",
             "category" => "required|integer|exists:categories,id",
@@ -167,6 +169,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        Gate::authorize("delete", $post);
+
         foreach ($post->photos as $photo) {
             // file delete
             Storage::delete('public/photo/'.$photo->name);

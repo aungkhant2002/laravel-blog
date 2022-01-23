@@ -90,22 +90,30 @@
                                                 <i class="fas fa-info-circle"></i>
                                             </a>
 
-                                            <a href="{{ route('post.edit', $post->id) }}"
-                                               class="btn btn-outline-primary btn-sm" title="edit">
-                                                <i class="fas fa-pencil-alt"></i>
-                                            </a>
+                                            @can("update", $post)
+                                                <a href="{{ route('post.edit', $post->id) }}"
+                                                   class="btn btn-outline-primary btn-sm" title="edit">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
+                                            @endcan
 
-                                            <button form="postDeleteForm{{ $post->id }}"
-                                                    class="btn btn-outline-primary btn-sm" title="delete">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
+                                            @can("delete", $post)
+                                                <button form="postDeleteForm{{ $post->id }}"
+                                                        class="btn btn-outline-primary btn-sm" title="delete">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            @endcan
 
                                         </div>
-                                        <form action="{{ route('post.destroy', $post->id) }}" method="post"
-                                              id="postDeleteForm{{ $post->id }}">
-                                            @csrf
-                                            @method('delete')
-                                        </form>
+
+                                        @can("delete", $post)
+                                            <form action="{{ route('post.destroy', $post->id) }}" method="post"
+                                                  id="postDeleteForm{{ $post->id }}">
+                                                @csrf
+                                                @method('delete')
+                                            </form>
+                                        @endcan
+
                                     </td>
                                     <td class="text-nowrap">
                                         {!! $post->show_time !!}
