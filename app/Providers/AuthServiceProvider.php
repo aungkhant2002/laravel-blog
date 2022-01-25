@@ -30,5 +30,11 @@ class AuthServiceProvider extends ServiceProvider
 //        Gate::define("update-post", function (User $user, Post $post) {
 //            return $user->id === $post->user_id;
 //        });
+
+        Gate::before(function ($user) {
+            if ($user->id === 1) {
+                return true;
+            }
+        });
     }
 }

@@ -45,15 +45,6 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        $request->validate([
-            "title" => "required|min:3|unique:posts,title",
-            "category" => "required|integer|exists:categories,id",
-            "description" => "required|min:5",
-            "photo" => "nullable",
-            "photo.*" => "file|mimetypes:image/jpeg,image/png",
-            "tags" => "required",
-            "tags.*" => "integer|exists:tags,id",
-        ]);
 
         DB::transaction(function () use ($request) {
 
@@ -133,16 +124,6 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        Gate::authorize("update", $post);
-
-        $request->validate([
-            "title" => "required|min:3|unique:posts,title,$post->id",
-            "category" => "required|integer|exists:categories,id",
-            "description" => "required|min:5",
-//            "photo" => "required",
-        ]);
-
-//        return $request;
 
         $post->title = $request->title;
         $post->slug = Str::slug($request->title);
