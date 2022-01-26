@@ -31,5 +31,9 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive("ak", function () {
             return "<h1>Aung Khant</h1>";
         });
+
+        Blade::if('onlyAdmin', function () {
+            return auth()->user()->role === "admin";
+        });
     }
 }

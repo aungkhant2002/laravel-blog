@@ -21,9 +21,10 @@ class DatabaseSeeder extends Seeder
     {
         User::create([
             'name' => "Admin",
+            'role' => "admin",
             'email' => "admin@gmail.com",
             'email_verified_at' => now(),
-            'password' => Hash::make("asdffdsa"), // password
+            'password' => Hash::make("asdffdsa"),
             'remember_token' => Str::random(10),
         ]);
 

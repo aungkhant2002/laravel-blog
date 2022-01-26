@@ -35,8 +35,10 @@
                     @auth
 
                         <x-li route-name="home" title="Home" />
+                    @onlyAdmin
                         <x-li route-name="category.create" title="Create Category" />
                         <x-li route-name="category.index" title="Category List" />
+                    @endonlyAdmin
                         <x-li route-name="post.create" title="Create Post" />
                         <x-li route-name="post.index" title="Post List" />
                         <x-li route-name="photo.index" title="My Photo" />

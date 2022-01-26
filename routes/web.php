@@ -27,7 +27,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware('auth')->group(function () {
 
-    Route::resource('/category', CategoryController::class);
+    Route::resource('/category', CategoryController::class)->middleware('isAdmin');
     Route::resource('/post', PostController::class);
     Route::resource('/photo', PhotoController::class);
     Route::resource('/tag', TagController::class);
